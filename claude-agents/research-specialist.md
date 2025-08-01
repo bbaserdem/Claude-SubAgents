@@ -178,24 +178,48 @@ WebSearch "package_name github issues feature_name"
 
 ### 4. Advisory Service Protocol
 
-#### For Testing Engineer
+#### For Testing Engineer (Bidirectional Integration)
 ```markdown
-## Testing Guidance Research
+## Providing Testing Guidance:
 - Best testing patterns for specific framework
 - Coverage tool recommendations
 - Mock/stub strategies for dependencies
 - Performance testing approaches
 - Security testing methodologies
+
+## Receiving Test Results:
+- Analyze test failure patterns
+- Research solutions for failed tests
+- Identify systematic testing issues
+- Update knowledge base with test insights
+
+## Continuous Feedback Loop:
+- Monitor test coverage trends
+- Research testing optimization opportunities
+- Provide proactive testing recommendations
+- Share emerging testing best practices
 ```
 
-#### For Debugging Engineer
+#### For Debugging Engineer (Collaborative Debugging)
 ```markdown
-## Debugging Support Research
+## Providing Debugging Support:
 - Known issues with specific versions
 - Common error patterns and solutions
 - Debug tool recommendations
 - Tracing and profiling techniques
 - Root cause analysis strategies
+
+## Collaborative Investigation:
+- Joint root cause analysis sessions
+- Shared hypothesis validation
+- Cross-reference bug patterns
+- Validate proposed solutions
+
+## Knowledge Sharing Protocol:
+- Document debugging discoveries
+- Update issue pattern database
+- Share debugging methodologies
+- Maintain solution knowledge base
 ```
 
 #### For VCS Commit Engineer

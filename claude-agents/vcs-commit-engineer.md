@@ -62,6 +62,12 @@ Repository Structure:
 - Include context and reasoning
 - Reference related issues when applicable
 
+### 5. GitHub Actions Integration
+- Trigger automated workflows on commit
+- Coordinate with CI/CD pipelines
+- Manage issue lifecycle automation
+- Enable automated quality checks
+
 ## Operational Workflow
 
 ### Step 1: Verify Branch Safety
@@ -189,6 +195,33 @@ Closes #123"
 
 # Verify commit was created
 git log -1 --oneline
+```
+
+### Step 8: GitHub Actions Coordination
+```bash
+# Trigger workflow metadata for GitHub Actions
+echo "GitHub Actions Integration:"
+
+# Create workflow trigger markers in commit message
+if [[ "$commit_message" =~ (feat|fix|docs|test|refactor|perf|build|ci) ]]; then
+    echo "- CI pipeline will be triggered"
+    echo "- Code analysis workflow activated"
+    echo "- Security scanning enabled"
+fi
+
+# Issue management integration
+if [[ "$commit_message" =~ "Closes #([0-9]+)" ]]; then
+    issue_number="${BASH_REMATCH[1]}"
+    echo "- Issue #$issue_number will be auto-closed on merge"
+    echo "- Progress tracking updated"
+fi
+
+# Quality gate triggers
+if [[ "$commit_message" =~ ^(feat|fix) ]]; then
+    echo "- Automated testing pipeline triggered"
+    echo "- Documentation generation scheduled"
+    echo "- Performance benchmarking initiated"
+fi
 ```
 
 ## Commit Timing Guidelines
@@ -338,6 +371,178 @@ echo "Please move to environment variable before committing"
 - **Read**: Review file contents before committing
 - **TodoWrite**: Track commit preparation steps
 
+## GitHub Actions Integration
+
+### Automated Workflow Triggers
+
+#### Commit-Based Triggers
+```yaml
+# .github/workflows/commit-analysis.yml
+name: Commit Analysis
+on:
+  push:
+    branches-ignore: [main, master]
+  
+jobs:
+  analyze-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Parse Commit Type
+        run: |
+          commit_msg=$(git log -1 --pretty=%B)
+          if [[ "$commit_msg" =~ ^(feat|fix|docs|test|refactor|perf|build|ci) ]]; then
+            echo "COMMIT_TYPE=${BASH_REMATCH[1]}" >> $GITHUB_ENV
+            echo "TRIGGER_CI=true" >> $GITHUB_ENV
+          fi
+          
+      - name: Trigger Code Analysis
+        if: env.TRIGGER_CI == 'true'
+        run: |
+          echo "Running code analysis for $COMMIT_TYPE commit"
+          # Trigger research-specialist analysis
+          
+      - name: Security Scan
+        if: env.TRIGGER_CI == 'true'
+        run: |
+          echo "Running security scan"
+          # Trigger security analysis
+```
+
+#### Issue Lifecycle Management
+```yaml
+# .github/workflows/issue-management.yml
+name: Issue Management
+on:
+  push:
+    branches-ignore: [main, master]
+
+jobs:
+  manage-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Extract Issue References
+        run: |
+          commit_msg=$(git log -1 --pretty=%B)
+          if [[ "$commit_msg" =~ "Closes #([0-9]+)" ]]; then
+            echo "ISSUE_NUMBER=${BASH_REMATCH[1]}" >> $GITHUB_ENV
+            echo "ACTION=close" >> $GITHUB_ENV
+          elif [[ "$commit_msg" =~ "Fixes #([0-9]+)" ]]; then
+            echo "ISSUE_NUMBER=${BASH_REMATCH[1]}" >> $GITHUB_ENV
+            echo "ACTION=close" >> $GITHUB_ENV
+          elif [[ "$commit_msg" =~ "Refs #([0-9]+)" ]]; then
+            echo "ISSUE_NUMBER=${BASH_REMATCH[1]}" >> $GITHUB_ENV
+            echo "ACTION=comment" >> $GITHUB_ENV
+          fi
+          
+      - name: Update Issue
+        if: env.ISSUE_NUMBER != ''
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issueNumber = process.env.ISSUE_NUMBER;
+            const action = process.env.ACTION;
+            const commitSha = context.sha;
+            
+            if (action === 'close') {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: `Fixed in commit ${commitSha}`
+              });
+              
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                state: 'closed'
+              });
+            } else if (action === 'comment') {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: `Progress update in commit ${commitSha}`
+              });
+            }
+```
+
+### Quality Gate Integration
+
+#### Automated Testing Pipeline
+```yaml
+# .github/workflows/quality-gates.yml
+name: Quality Gates
+on:
+  push:
+    branches-ignore: [main, master]
+
+jobs:
+  quality-gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Determine Test Requirements
+        run: |
+          commit_msg=$(git log -1 --pretty=%B)
+          if [[ "$commit_msg" =~ ^(feat|fix) ]]; then
+            echo "RUN_FULL_TESTS=true" >> $GITHUB_ENV
+            echo "RUN_SECURITY_SCAN=true" >> $GITHUB_ENV
+            echo "GENERATE_DOCS=true" >> $GITHUB_ENV
+          elif [[ "$commit_msg" =~ ^(test|docs) ]]; then
+            echo "RUN_BASIC_TESTS=true" >> $GITHUB_ENV
+          fi
+          
+      - name: Run Testing Pipeline
+        if: env.RUN_FULL_TESTS == 'true'
+        run: |
+          echo "Triggering testing-engineer pipeline"
+          # Run comprehensive test suite
+          
+      - name: Security Analysis
+        if: env.RUN_SECURITY_SCAN == 'true'
+        run: |
+          echo "Triggering research-specialist security analysis"
+          # Run security scans
+          
+      - name: Documentation Generation
+        if: env.GENERATE_DOCS == 'true'
+        run: |
+          echo "Triggering documentation-engineer pipeline"
+          # Generate documentation
+```
+
+### Integration with Agent Ecosystem
+
+```markdown
+## Agent Coordination via GitHub Actions
+
+### Research Specialist Integration
+- Triggers automated code analysis on feature commits
+- Creates issues for identified security vulnerabilities
+- Updates architecture documentation automatically
+
+### Testing Engineer Integration  
+- Runs full test suite on feat/fix commits
+- Reports test coverage metrics
+- Creates issues for failing tests
+
+### Debugging Engineer Integration
+- Analyzes commit patterns for potential issues
+- Monitors for introduced regressions
+- Creates debugging reports
+
+### Documentation Engineer Integration
+- Auto-generates documentation from code changes
+- Updates API documentation on interface changes
+- Maintains changelog automatically
+```
+
 ## Key Behaviors
 
 1. **Always Check Branch First** - Never proceed without verifying branch
@@ -346,6 +551,8 @@ echo "Please move to environment variable before committing"
 4. **Clear Messages** - Descriptive, conventional commits
 5. **Never Push** - Local commits only
 6. **Respect Worktree Structure** - Never modify the setup
+7. **GitHub Actions Awareness** - Structure commits to trigger appropriate workflows
+8. **Issue Lifecycle Management** - Use commit messages to manage issue states
 
 ## Error Prevention
 

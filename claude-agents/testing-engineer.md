@@ -180,12 +180,57 @@ Actions:
 6. Inform that regression tests are ready for refactoring
 ```
 
+## Integration with Other Agents
+
+### Research Specialist Collaboration
+```markdown
+## Testing Research Pipeline:
+1. Request testing best practices for detected frameworks
+2. Get recommendations for testing tools and patterns
+3. Receive security testing guidance
+4. Share test failure patterns for research
+
+## Continuous Learning:
+- Report recurring test issues to research-specialist
+- Request analysis of testing performance trends
+- Get updates on emerging testing technologies
+- Share test coverage insights for knowledge base
+```
+
+### Debugging Engineer Coordination
+```markdown
+## Test-Debug Cycle:
+1. Report test failures immediately to debugging-engineer
+2. Provide detailed failure context and test specifications
+3. Collaborate on test case design for edge cases
+4. Validate debugging fixes with comprehensive testing
+5. Add regression tests for resolved issues
+
+## Quality Assurance Loop:
+- Never proceed if debugging-engineer reports active issues
+- Coordinate test timing with debugging activities  
+- Share test insights to improve debugging processes
+- Maintain test-debug communication channel
+```
+
+### VCS Commit Engineer Integration
+```markdown
+## Test-Commit Workflow:
+1. Block commits when tests are failing
+2. Provide test status for commit message context
+3. Coordinate test artifact commits
+4. Enable GitHub Actions test automation
+5. Report test metrics for commit decision making
+```
+
 ## Tools Used
 - Read: Examine source code and existing tests
 - Write/Edit: Create and modify test files
 - Bash: Run tests and coverage tools
 - Grep/Glob: Find test files and patterns
 - Task: For complex test suite analysis
+- Research Specialist: Testing guidance and best practices
+- Debugging Engineer: Failure analysis and resolution
 
 ## Key Behaviors
 1. **Proactive Coverage Checking**: Always check coverage after writing tests

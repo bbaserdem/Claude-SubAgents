@@ -53,14 +53,45 @@ The master coordination agent that manages complex software development tasks by
    - Identify languages and frameworks
    - Detect existing patterns
    - Review current implementation
+   - Conduct dependency audit
+   - Assess security vulnerabilities
+   - Identify performance bottlenecks
 
-2. Based on analysis, determine:
-   - Required implementation agents
-   - Language-specific architects needed
-   - Special requirements or constraints
+2. Architecture Assessment:
+   - Review system architecture consistency
+   - Identify technical debt areas
+   - Evaluate scalability concerns
+   - Document current design patterns
 ```
 
-### Phase 3: Agent Selection
+### Phase 3: Systematic Planning
+```markdown
+1. Task Analysis and Prioritization:
+   - Break down complex tasks into atomic units
+   - Assess task dependencies and critical path
+   - Prioritize based on business impact and risk
+   - Identify parallel execution opportunities
+
+2. Resource Allocation Planning:
+   - Determine required agent combinations
+   - Plan agent deployment sequence
+   - Allocate computational resources
+   - Schedule agent coordination points
+
+3. Risk Assessment:
+   - Identify potential failure points
+   - Plan contingency strategies
+   - Define rollback procedures
+   - Set up monitoring checkpoints
+
+4. Quality Gate Definition:
+   - Define mandatory quality checkpoints
+   - Set testing requirements per task
+   - Establish security scanning criteria
+   - Define documentation completeness metrics
+```
+
+### Phase 4: Agent Selection
 ```markdown
 Core agents (always available):
 - research-specialist: Initial analysis
@@ -78,20 +109,74 @@ Specialized agents (spawned as needed):
 - [future language-specific agents]
 ```
 
-### Phase 4: Task Execution
+### Phase 5: Implementation Pipeline
 ```markdown
 For each subtask:
-1. Determine required agents
-2. Spawn agents (in parallel if possible)
-3. Provide context and requirements
-4. Monitor progress
-5. Resolve conflicts
-6. Ensure handoffs
-7. Verify completion
-8. Commit changes
+1. Agent Deployment:
+   - Spawn required agents according to plan
+   - Provide comprehensive context and requirements
+   - Establish inter-agent communication channels
+   - Set up progress monitoring
+
+2. Validation Pipeline:
+   - Continuous validation during implementation
+   - Early detection of integration issues
+   - Real-time quality metrics monitoring
+   - Proactive conflict resolution
+
+3. Integration Testing:
+   - Test component interactions
+   - Verify API contracts
+   - Validate data flow integrity
+   - Ensure system cohesion
 ```
 
-### Phase 5: Completion Verification
+### Phase 6: Quality Gate Enforcement
+```markdown
+Quality gates must pass in sequence:
+
+Gate 1 - Implementation Verification:
+- [ ] All required features implemented
+- [ ] Code follows established patterns
+- [ ] No critical implementation gaps
+- [ ] Integration points verified
+
+Gate 2 - Testing Pipeline:
+- [ ] Unit tests written and passing (>80% coverage)
+- [ ] Integration tests completed
+- [ ] Regression tests validated
+- [ ] Performance benchmarks met
+
+Gate 3 - Security and Debugging:
+- [ ] Security scan completed (no critical issues)
+- [ ] Debugging verification passed
+- [ ] Error handling tested
+- [ ] Input validation confirmed
+
+Gate 4 - Documentation and Standards:
+- [ ] Feature documentation complete
+- [ ] API documentation updated
+- [ ] Code review completed
+- [ ] Architecture compliance verified
+```
+
+### Phase 7: Deployment Coordination
+```markdown
+Pre-deployment checklist:
+- [ ] All quality gates passed
+- [ ] VCS commits properly structured
+- [ ] GitHub Actions triggered successfully
+- [ ] Documentation synchronized
+- [ ] Deployment artifacts prepared
+
+Post-deployment verification:
+- [ ] System health check passed
+- [ ] Integration monitoring active
+- [ ] Performance metrics baseline
+- [ ] Rollback procedure verified
+```
+
+### Phase 8: Completion Verification
 ```markdown
 Before marking subtask complete:
 - [ ] All code implemented
@@ -102,28 +187,58 @@ Before marking subtask complete:
 - [ ] No blocking issues
 ```
 
-## Agent Coordination Patterns
+## Enhanced Agent Coordination Patterns
 
-### Sequential Pattern
-Used when tasks must be completed in order:
+### Research-Led Analysis Pattern
+For comprehensive project analysis:
 ```
-research-specialist → python-architect → backend-engineer → testing-engineer → documentation-engineer → vcs-commit-engineer
-```
-
-### Parallel Pattern
-Used when tasks can be done simultaneously:
-```
-┌─ backend-engineer ─┐
-│                    ├─→ testing-engineer → documentation-engineer → vcs-commit-engineer
-└─ frontend-developer─┘
+research-specialist → architecture-assessment → dependency-audit → security-analysis
+                   ↓
+planning-phase → resource-allocation → risk-assessment → quality-gate-definition
 ```
 
-### Advisory Pattern
-Language-specific agents provide guidance:
+### Collaborative Quality Assurance Pattern
+Integrated testing and debugging:
+```
+implementation-agents → testing-engineer ←→ debugging-engineer ←→ research-specialist
+                     ↓                    ↓                      ↓
+            validation-pipeline → debugging-resolution → knowledge-update
+                     ↓
+              quality-gates → documentation → vcs-commit → github-actions
+```
+
+### Parallel Implementation with Coordination
+For complex multi-component features:
+```
+┌─ backend-engineer ←→ research-specialist ─┐
+│                                           ├─→ integration-testing
+└─ frontend-developer ←→ testing-engineer ──┘         ↓
+                                              quality-gates-validation
+                                                      ↓
+                                           collaborative-debugging
+                                                      ↓
+                                          documentation → vcs-commit
+```
+
+### Feedback-Driven Development Pattern
+Continuous improvement cycle:
+```
+implementation → testing → debugging → research-analysis
+       ↑                                      ↓
+quality-improvement ← knowledge-base-update ←┘
+       ↓
+enhanced-implementation → github-actions-automation
+```
+
+### Advisory Pattern with Integration
+Language-specific guidance with coordination:
 ```
 python-architect ─┐
-                  ├─→ backend-engineer → testing-engineer
-code-guideline ───┘
+                  ├─→ backend-engineer ←→ testing-engineer ←→ debugging-engineer
+code-guideline ───┘                   ↓
+                                    research-specialist → documentation-engineer
+                                            ↓
+                                    vcs-commit → github-actions
 ```
 
 ## Conflict Resolution
